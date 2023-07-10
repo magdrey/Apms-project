@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { HashLink } from "react-router-hash-link";
 import logo from "../assets/Logo.png";
-import Ham from "../assets/Hamburger-menu.svg";
-import Close from "../assets/Close.svg";
+import { FaBars } from "react-icons/fa";
+import { MdClose } from "react-icons/md";
+import { useNavigate /* useLocation */ } from "react-router-dom";
 
 function NavBar() {
   const [hamopen, setHamopen] = useState(false);
   const toggleham = () => setHamopen(!hamopen);
   const toggleclose = () => setHamopen(false);
+
+  const navigate = useNavigate();
 
   return (
     <div className="Navbar">
@@ -21,9 +24,9 @@ function NavBar() {
       </div>
 
       {hamopen ? (
-        <img className="ham" src={Close} onClick={toggleham} alt="close" />
+        <MdClose className="ham close" onClick={toggleham} />
       ) : (
-        <img className="ham" src={Ham} onClick={toggleham} alt="menu" />
+        <FaBars className="ham" onClick={toggleham} />
       )}
 
       <div className={`${hamopen ? "navshow" : "navhid"} "Navitem" `}>
@@ -31,13 +34,28 @@ function NavBar() {
           <HashLink smooth to="#top" onClick={toggleclose} className="link-to">
             <p className="link">About </p>
           </HashLink>
-          <HashLink smooth to="#top" onClick={toggleclose} className="link-to">
+          <HashLink
+            smooth
+            to="#WCAPMSD"
+            onClick={toggleclose}
+            className="link-to"
+          >
             <p className="link">What does APMS do ?</p>
           </HashLink>
-          <HashLink smooth to="#top" onClick={toggleclose} className="link-to">
+          <HashLink
+            smooth
+            to="#MeetDT"
+            onClick={toggleclose}
+            className="link-to"
+          >
             <p className="link">team members</p>
           </HashLink>
-          <HashLink smooth to="#top" onClick={toggleclose} className="link-to">
+          <HashLink
+            smooth
+            to="#Contactus"
+            onClick={toggleclose}
+            className="link-to"
+          >
             <p className="link">Contacts </p>
           </HashLink>
         </div>
@@ -45,7 +63,7 @@ function NavBar() {
           {" "}
           <p className="sign">Sign Up</p>{" "}
         </div>
-        <div className="req-btn">
+        <div className="req-btn" onClick={() => navigate("/admin")}>
           {" "}
           <p className="sign">Sign In</p>{" "}
         </div>
