@@ -7,6 +7,7 @@ import { wcapmsdcard } from "./Homecards";
 import contactimg from "../../assets/contactimg.png";
 import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
+import MeetDteam from "./MeetDteam";
 
 function HomePage() {
   return (
@@ -68,7 +69,7 @@ function HomePage() {
               Meet the brilliant minds behind the development of
             </p>
           </div>
-          {/* <MeetDteam/> swiper not yet installed */}
+          <MeetDteam />
         </div>
         {/* contact */}
         <div id="Contactus">

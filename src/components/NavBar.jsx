@@ -59,11 +59,11 @@ function NavBar() {
             <p className="link">Contacts </p>
           </HashLink>
         </div>
-        <div className="req-btn upbtn">
+        <div className="req-btn upbtn" onClick={() => navigate("/signup")}>
           {" "}
           <p className="sign">Sign Up</p>{" "}
         </div>
-        <div className="req-btn" onClick={() => navigate("/admin")}>
+        <div className="req-btn" onClick={() => navigate("/signin")}>
           {" "}
           <p className="sign">Sign In</p>{" "}
         </div>
