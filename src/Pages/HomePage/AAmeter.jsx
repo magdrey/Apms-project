@@ -21,14 +21,15 @@ function AAmeter() {
     axios
       .get(`https://autopms.onrender.com/api/v1/data/${user.meterNumber}`)
       .then((response) => {
-        setMdata(response.data.data);
+        setMdata(response.data.info);
+        console.log(response.data.info);
       });
   };
 
   useEffect(() => {
     const interval = setInterval(() => {
       getMdata();
-      console.log(mdata);
+      // console.log(mdata);
     }, 1000);
 
     return () => clearInterval(interval);
@@ -102,10 +103,10 @@ function AAmeter() {
   return (
     <div className="aameter">
       {mdata.map((mdata) => (
-        <div key={mdata.meterNumber} className="apartbul">
+        <div key={mdata.meterNo} className="apartbul">
           <div className="generalbultitle">
             {mdata ? (
-              <p className="gbtxt"> Apartment {mdata.meterNumber}</p>
+              <p className="gbtxt"> Apartment {mdata.VOLTAGE}</p>
             ) : (
               <p className="gbtxt"> Apartment ---</p>
             )}
@@ -114,7 +115,7 @@ function AAmeter() {
             <div className="tnoutxt aptparnam">Total Number of Unit</div>
             {mdata ? (
               <div className="tnouval aptparval">
-                {mdata.meterNumber}
+                {mdata.units}
                 units{" "}
               </div>
             ) : (
@@ -125,7 +126,7 @@ function AAmeter() {
             <div className="aptvol">
               <div className="voltxt aptparnam">voltage</div>{" "}
               {mdata ? (
-                <div className="volval aptparval"> {mdata.voltage} volts </div>
+                <div className="volval aptparval"> {mdata.VOLTAGE} volts </div>
               ) : (
                 <div className="volval aptparval"> --- volts </div>
               )}
@@ -133,7 +134,7 @@ function AAmeter() {
             <div className="aptpwrcos">
               <div className="pwrcostxt aptparnam">Power consumption</div>
               {mdata ? (
-                <div className="pwrcosval aptparval"> {mdata.power} kwh</div>
+                <div className="pwrcosval aptparval"> {mdata.VOLTAGE} kwh</div>
               ) : (
                 <div className="pwrcosval aptparval"> --- kwh</div>
               )}
@@ -141,7 +142,7 @@ function AAmeter() {
             <div className="aptpeakI">
               <div className="peakItxt aptparnam"> Peak Current</div>
               {mdata ? (
-                <div className="peakIval aptparval"> {mdata.current} Amps</div>
+                <div className="peakIval aptparval"> {mdata.CURRENT} Amps</div>
               ) : (
                 <div className="peakIval aptparval"> --- Amps</div>
               )}
@@ -149,7 +150,7 @@ function AAmeter() {
             <div className="aptrmsI">
               <div className="rmsItxt aptparnam">R.M.S Current</div>
               {mdata ? (
-                <div className="rmsIval aptparval"> {mdata.current} Amps</div>
+                <div className="rmsIval aptparval"> {mdata.CURRENT} Amps</div>
               ) : (
                 <div className="rmsIval aptparval"> --- Amps</div>
               )}
