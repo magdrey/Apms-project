@@ -136,6 +136,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { register } from "../../api/base/index.js";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Spinner from "../../components/Spinner";
 
 function SignUp() {
   const [formData, setFormData] = useState({
@@ -153,6 +154,7 @@ function SignUp() {
   const [bvalid, setBvalid] = useState(true);
   const [cvalid, setCvalid] = useState(true);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const checkA = (e) => {
     const mailregex = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/;
@@ -212,6 +214,7 @@ function SignUp() {
       meterNumber,
       address,
     };
+    setLoading(true);
 
     try {
       const resp = await axios.post(
@@ -221,6 +224,7 @@ function SignUp() {
 
       if (resp.data.message === "User created successfully") {
         toast.success("SignUp successful");
+        setLoading(false);
         localStorage.setItem("user", JSON.stringify(resp.data.data));
         navigate("/user");
       }
@@ -235,6 +239,7 @@ function SignUp() {
         toast.error(error.response.data.error);
       }
       console.log(error);
+      setLoading(false);
     }
   };
 
@@ -254,153 +259,161 @@ function SignUp() {
               {" "}
               Automatic Power Management <br /> System
             </div>
-            <form className="upform" onSubmit={onSubmit}>
-              <label className="upbel">
-                {" "}
-                Full Name: <br />
-                <input
-                  type="text"
-                  className="nameInput upput"
-                  placeholder="Name"
-                  id="name"
-                  value={name}
-                  onChange={onChange}
-                  // required={true}
-                />
-                <span className="errmessage"></span>
-              </label>
-
-              <label className="upbel">
-                Email: <br />
-                <input
-                  type="email"
-                  className="emailInput upput"
-                  placeholder="Email"
-                  id="email"
-                  value={email}
-                  onChange={onChange}
-                  onBlur={checkA}
-                  // required={true}
-                />
-                {!avalid && <span className="errmessage">email not valid</span>}
-              </label>
-
-              <label className="upbel">
-                Password: <br />
-                <div className="passwordInputDiv upput">
+            {loading ? (
+              <Spinner />
+            ) : (
+              <form className="upform" onSubmit={onSubmit}>
+                <label className="upbel">
+                  {" "}
+                  {/* Full Name: <br /> */}
                   <input
-                    type={showPassword ? "text" : "password"}
-                    className="passwordInput "
-                    placeholder="password"
-                    id="password"
-                    value={password}
+                    type="text"
+                    className="nameInput upput"
+                    placeholder="Full Name"
+                    id="name"
+                    value={name}
                     onChange={onChange}
                     // required={true}
                   />
+                  <span className="errmessage"></span>
+                </label>
 
-                  <img
-                    src={visibilityIcon}
-                    alt="show password"
-                    className="showPassword"
-                    onClick={() => setShowPassword((prevState) => !prevState)}
-                  />
-                </div>
-                <span className="errmessage"></span>
-              </label>
-
-              <label className="upbel">
-                {" "}
-                PhoneNumber: <br />
-                <input
-                  type="string"
-                  className="phoneInput upput"
-                  placeholder="081xxxxxxxx"
-                  id="tele"
-                  value={tele}
-                  onChange={onChange}
-                  onBlur={checkB}
-                  // required={true}
-                />
-                {!bvalid && (
-                  <span className="errmessage">phone numer not valid</span>
-                )}
-              </label>
-
-              <label className="upbel">
-                {" "}
-                Meter Number: <br />
-                <input
-                  type="string"
-                  className="meterInput upput"
-                  placeholder="Enter meter number"
-                  id="meterNumber"
-                  value={meterNumber}
-                  onChange={onChange}
-                  onBlur={checkC}
-                  // required={true}
-                />
-                {!cvalid && (
-                  <span className="errmessage">
-                    Please enter a valid meter number
-                  </span>
-                )}
-              </label>
-
-              <label className="upbel">
-                {" "}
-                Address: <br />
-                <textarea
-                  type="textarea"
-                  className="addressInput upput"
-                  placeholder="please enter your home address"
-                  id="address"
-                  value={address}
-                  onChange={onChange}
-                  // required={true}
-                />
-              </label>
-
-              {/* confirmpassword last  */}
-
-              <label className="upbel">
-                Confirm Password: <br />
-                <div className="passwordInputDiv upput">
+                <label className="upbel">
+                  {/* Email: <br /> */}
                   <input
-                    type={showCPassword ? "text" : "password"}
-                    className="passwordInput "
-                    placeholder="Confirm  password"
-                    id="confirmpassword"
-                    // value={cpass}
-                    onChange={(e) => {
-                      checkpass(e.target.value);
-                    }}
+                    type="email"
+                    className="emailInput upput"
+                    placeholder="Email"
+                    id="email"
+                    value={email}
+                    onChange={onChange}
+                    onBlur={checkA}
                     // required={true}
                   />
+                  {!avalid && (
+                    <span className="errmessage">email not valid</span>
+                  )}
+                </label>
 
-                  <img
-                    src={visibilityIcon}
-                    alt="show password"
-                    className="showPassword"
-                    onClick={() => setShowCPassword((prevState) => !prevState)}
+                <label className="upbel">
+                  {/* Password: <br /> */}
+                  <div className="passwordInputDiv upput">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      className="passwordInput "
+                      placeholder="password"
+                      id="password"
+                      value={password}
+                      onChange={onChange}
+                      // required={true}
+                    />
+
+                    <img
+                      src={visibilityIcon}
+                      alt="show password"
+                      className="showPassword"
+                      onClick={() => setShowPassword((prevState) => !prevState)}
+                    />
+                  </div>
+                  <span className="errmessage"></span>
+                </label>
+
+                <label className="upbel">
+                  {" "}
+                  {/* PhoneNumber: <br /> */}
+                  <input
+                    type="string"
+                    className="phoneInput upput"
+                    placeholder=" phoneNumber/081xxxxxxxx"
+                    id="tele"
+                    value={tele}
+                    onChange={onChange}
+                    onBlur={checkB}
+                    // required={true}
                   />
+                  {!bvalid && (
+                    <span className="errmessage">phone numer not valid</span>
+                  )}
+                </label>
+
+                <label className="upbel">
+                  {" "}
+                  {/* Meter Number: <br /> */}
+                  <input
+                    type="string"
+                    className="meterInput upput"
+                    placeholder="Enter meter number"
+                    id="meterNumber"
+                    value={meterNumber}
+                    onChange={onChange}
+                    onBlur={checkC}
+                    // required={true}
+                  />
+                  {!cvalid && (
+                    <span className="errmessage">
+                      Please enter a valid meter number
+                    </span>
+                  )}
+                </label>
+
+                <label className="upbel">
+                  {" "}
+                  {/* Address: <br /> */}
+                  <textarea
+                    type="textarea"
+                    className="addressInput upput"
+                    placeholder="please enter your home address"
+                    id="address"
+                    value={address}
+                    onChange={onChange}
+                    // required={true}
+                  />
+                </label>
+
+                {/* confirmpassword last  */}
+
+                <label className="upbel">
+                  {/* Confirm Password: <br /> */}
+                  <div className="passwordInputDiv upput">
+                    <input
+                      type={showCPassword ? "text" : "password"}
+                      className="passwordInput "
+                      placeholder="Confirm  password"
+                      id="confirmpassword"
+                      // value={cpass}
+                      onChange={(e) => {
+                        checkpass(e.target.value);
+                      }}
+                      // required={true}
+                    />
+
+                    <img
+                      src={visibilityIcon}
+                      alt="show password"
+                      className="showPassword"
+                      onClick={() =>
+                        setShowCPassword((prevState) => !prevState)
+                      }
+                    />
+                  </div>
+                  {!ispassm && (
+                    <span className="errmessage">passwords don't match</span>
+                  )}
+                </label>
+
+                <div className="signUpBar">
+                  <button type="submit" className="signButton">
+                    <p className="signText">Register</p>
+                  </button>
                 </div>
-                {!ispassm && (
-                  <span className="errmessage">passwords don't match</span>
-                )}
-              </label>
 
-              <div className="signUpBar">
-                <button type="submit" className="signButton">
-                  <p className="signText">Register</p>
-                </button>
-              </div>
-
-              <div className="forgotcontainer">
-                <Link to="/signin" className="forgotPasswordLink">
-                  <p className="instead"> LogIn instead?</p>
-                </Link>
-              </div>
-            </form>
+                <div className="forgotcontainer">
+                  <Link to="/signin" className="forgotPasswordLink">
+                    <p className="instead"> LogIn instead?</p>
+                  </Link>
+                </div>
+              </form>
+            )}
           </div>
         </div>
       </div>

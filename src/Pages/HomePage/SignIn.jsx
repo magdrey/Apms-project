@@ -107,6 +107,7 @@ import visibilityIcon from "../../assets/visibilityIcon.svg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Spinner from "../../components/Spinner";
 
 function SignIn() {
   const [forminData, setForminData] = useState({
@@ -116,6 +117,7 @@ function SignIn() {
   const { email, password } = forminData;
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const [avalid, setAvalid] = useState(true);
   const checkA = (e) => {
@@ -138,6 +140,7 @@ function SignIn() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const data = {
       email,
       password,
@@ -151,6 +154,7 @@ function SignIn() {
 
       if (resp.data.message === "Login successful") {
         toast.success(resp.data.message);
+        setLoading(false);
         localStorage.setItem("user", JSON.stringify(resp.data.user));
 
         if (resp.data.user.name === "Drey") {
@@ -170,6 +174,7 @@ function SignIn() {
         toast.error(error.response.data.error);
       }
       console.log(error);
+      setLoading(false);
     }
   };
 
@@ -201,61 +206,67 @@ function SignIn() {
               {" "}
               Automatic Power Management <br /> System
             </div>
-            <form className="upform informmt" onSubmit={onSubmit}>
-              <label className="upbel">
-                Email: <br />
-                <input
-                  type="email"
-                  className="emailInput input"
-                  placeholder="Email"
-                  id="email"
-                  value={email}
-                  onChange={onChange}
-                  onBlur={checkA}
-                  required={true}
-                />
-                {!avalid && <span className="errmessage">email not valid</span>}
-              </label>
-
-              <label className="upbel">
-                Password: <br />
-                <div className="passwordInputDiv input">
+            {loading ? (
+              <Spinner />
+            ) : (
+              <form className="upform informmt" onSubmit={onSubmit}>
+                <label className="upbel">
+                  Email: <br />
                   <input
-                    type={showPassword ? "text" : "password"}
-                    className="passwordInput "
-                    placeholder="password"
-                    id="password"
-                    value={password}
+                    type="email"
+                    className="emailInput input"
+                    placeholder="Email"
+                    id="email"
+                    value={email}
                     onChange={onChange}
+                    onBlur={checkA}
                     required={true}
                   />
+                  {!avalid && (
+                    <span className="errmessage">email not valid</span>
+                  )}
+                </label>
 
-                  <img
-                    src={visibilityIcon}
-                    alt="show password"
-                    className="showPassword"
-                    onClick={() => setShowPassword((prevState) => !prevState)}
-                  />
+                <label className="upbel">
+                  Password: <br />
+                  <div className="passwordInputDiv input">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      className="passwordInput "
+                      placeholder="password"
+                      id="password"
+                      value={password}
+                      onChange={onChange}
+                      required={true}
+                    />
+
+                    <img
+                      src={visibilityIcon}
+                      alt="show password"
+                      className="showPassword"
+                      onClick={() => setShowPassword((prevState) => !prevState)}
+                    />
+                  </div>
+                  <div className="forgotcontainer">
+                    <Link to="/forgot-password" className="forgotPasswordLink">
+                      Forgot Password?
+                    </Link>
+                  </div>
+                </label>
+
+                <div className="signInBar">
+                  <button className="signButton">
+                    <p className="signText">Log In</p>
+                  </button>
                 </div>
+
                 <div className="forgotcontainer">
-                  <Link to="/forgot-password" className="forgotPasswordLink">
-                    Forgot Password?
+                  <Link to="/signup" className="forgotPasswordLink">
+                    <p className="instead"> Don't have an account? Register!</p>
                   </Link>
                 </div>
-              </label>
-
-              <div className="signInBar">
-                <button className="signButton">
-                  <p className="signText">Log In</p>
-                </button>
-              </div>
-
-              <div className="forgotcontainer">
-                <Link to="/signup" className="forgotPasswordLink">
-                  <p className="instead"> Don't have an account? Register!</p>
-                </Link>
-              </div>
-            </form>
+              </form>
+            )}
           </div>
         </div>
       </div>
