@@ -1,7 +1,7 @@
 import React, { useState, useWebSocket, useEffect } from "react";
 import axios from "axios";
 
-function AAmeter() {
+function AAmeter(props) {
   const user = JSON.parse(localStorage.getItem("user"));
 
   const [mdata, setMdata] = useState([]);
@@ -19,7 +19,7 @@ function AAmeter() {
 
   const getMdata = () => {
     axios
-      .get(`https://autopms.onrender.com/api/v1/data/${user.meterNumber}`)
+      .get(`https://autopms.onrender.com/api/v1/data/${props.mNo}`)
       .then((response) => {
         setMdata(response.data.info);
         console.log(response.data.info);
@@ -106,22 +106,22 @@ function AAmeter() {
         <div key={mdata.meterNo} className="apartbul">
           <div className="generalbultitle">
             {mdata ? (
-              <p className="gbtxt"> Apartment {mdata.VOLTAGE}</p>
+              <p className="gbtxt"> Apartment {mdata.apartment}</p>
             ) : (
               <p className="gbtxt"> Apartment ---</p>
             )}
           </div>
-          <div className=" tnou">
+          {/* <div className=" tnou">
             <div className="tnoutxt aptparnam">Total Number of Unit</div>
             {mdata ? (
               <div className="tnouval aptparval">
-                {mdata.units}
+                {mdata.units} {" "}
                 units{" "}
               </div>
             ) : (
               <div className="tnouval aptparval">--- units </div>
             )}
-          </div>
+          </div> */}
           <div className="aptengpara">
             <div className="aptvol">
               <div className="voltxt aptparnam">voltage</div>{" "}
@@ -134,13 +134,16 @@ function AAmeter() {
             <div className="aptpwrcos">
               <div className="pwrcostxt aptparnam">Power consumption</div>
               {mdata ? (
-                <div className="pwrcosval aptparval"> {mdata.VOLTAGE} kwh</div>
+                <div className="pwrcosval aptparval">
+                  {" "}
+                  {mdata.VOLTAGE * mdata.CURRENT * 0.8} kwh
+                </div>
               ) : (
                 <div className="pwrcosval aptparval"> --- kwh</div>
               )}
             </div>
             <div className="aptpeakI">
-              <div className="peakItxt aptparnam"> Peak Current</div>
+              <div className="peakItxt aptparnam"> Current</div>
               {mdata ? (
                 <div className="peakIval aptparval"> {mdata.CURRENT} Amps</div>
               ) : (
@@ -148,15 +151,23 @@ function AAmeter() {
               )}
             </div>
             <div className="aptrmsI">
+              <div className="rmsItxt aptparnam">Total Unit</div>
+              {mdata ? (
+                <div className="rmsIval aptparval">{mdata.units} units </div>
+              ) : (
+                <div className="rmsIval aptparval">--- units </div>
+              )}
+            </div>
+            {/* <div className="aptrmsI">
               <div className="rmsItxt aptparnam">R.M.S Current</div>
               {mdata ? (
                 <div className="rmsIval aptparval"> {mdata.CURRENT} Amps</div>
               ) : (
                 <div className="rmsIval aptparval"> --- Amps</div>
               )}
-            </div>
+            </div> */}
           </div>
-          <div className="powctr">
+          {/* <div className="powctr">
             <p className="powctxt"> Power Supply Control</p>
             <div
               onClick={() => {
@@ -168,7 +179,7 @@ function AAmeter() {
             >
               <div className="PWRON"></div>
             </div>
-          </div>
+          </div> */}
         </div>
       ))}
     </div>

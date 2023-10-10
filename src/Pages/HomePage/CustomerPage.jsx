@@ -27,6 +27,8 @@ function CustomerPage() {
   const arrup = () => setProfarr(false);
 
   const user = JSON.parse(localStorage.getItem("user"));
+  const mNo = `${user.meterNumber}`;
+  console.log(mNo);
 
   const logout = () => {
     localStorage.removeItem("user");
@@ -114,7 +116,7 @@ function CustomerPage() {
           <div className="dashDT"></div>
         </div>
         <div className="dashbody">
-          <AAmeter />
+          <AAmeter mNo={mNo} />
         </div>
       </div>
     </div>
