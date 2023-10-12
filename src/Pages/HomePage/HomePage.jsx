@@ -66,7 +66,7 @@ function HomePage() {
           <div className="wcadhead">
             <p className="headtxt"> Meet The Team</p>
             <p className="subtxt">
-              Meet the brilliant minds behind the development of
+              Meet the brilliant minds behind the development of the APMS
             </p>
           </div>
           <MeetDteam />
@@ -84,7 +84,7 @@ function HomePage() {
             <div className="contactbdy">
               <p className="ctbdy"> Address: </p> <br />
               <p className="ctbdy"> tel: </p> <br />
-              <p className="ctbdy"> Email: </p> <br />
+              <p className="ctbdy"> Email: apms2105@gmail.com </p> <br />
             </div>
           </div>
 

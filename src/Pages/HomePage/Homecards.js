@@ -21,34 +21,34 @@ export const wcapmsdcard = [
     {
       img: <img src={wcad3} alt="img" />,
       wcad: " Control",
-      txt: "shut off power supply from anywhere"
+      txt: "shut off power supply "
     },
   ];
   
   export const Mteam = [
     {
       img: <img src={teamex1} alt="img" />,
-      name: " Sodiq Faran Ayomide",
+      name: " Sodiq Faran A",
     },
     {
       img: <img src={teamex1} alt="img" />,
-      name: " Drey Johnson ",
+      name: " Johnson Goodness O ",
     },
     {
       img: <img src={teamex1} alt="img" />,
-      name: " danny faraday",
+      name: " Eniojukan Daniel O",
     },
     {
       img: <img src={teamex1} alt="img" />,
-      name: " skidam baba",
+      name: " Damilare Taofeek O",
     },
     {
       img: <img src={teamex1} alt="img" />,
-      name: " jobby jobby",
+      name: " Tella Goodness O",
     },
     {
       img: <img src={teamex1} alt="img" />,
-      name: " Mr victor",
+      name: " Owoleke Victor F",
     },
   ];
   
